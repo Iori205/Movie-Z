@@ -21,6 +21,7 @@ type SearchPageCompProps = {
     page: string;
   }>;
 };
+
 export const SearchPageComp = async ({ searchParams }: SearchPageCompProps) => {
   const movieGenresList: genreResponseType = await getGenresList();
   const { value, genreId, page = "1" } = await searchParams;
@@ -50,25 +51,38 @@ export const SearchPageComp = async ({ searchParams }: SearchPageCompProps) => {
   }
 
   return (
-    <div className="w-screen flex flex-col items-center">
-      <div className="sm:w-[1440px] w-full sm:px-20 px-5 flex flex-col gap-8 sm:mt-13 sm:mb-[344px] my-8">
-        <h2 className="w-full sm:text-3xl text-2xl sm:leading-9 leading-8 font-semibold text-foreground">
-          Search results
-        </h2>
+    <div className="w-screen flex flex-col items-center pt-24">
+      {/* Ambient background effects */}
+      <div className="fixed top-1/4 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[150px] pointer-events-none" />
+      <div className="fixed bottom-0 left-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[150px] pointer-events-none" />
+      
+      <div className="relative z-10 sm:max-w-[1440px] w-full sm:px-20 px-5 flex flex-col gap-10 sm:mt-8 mt-4 mb-16">
+        <div className="flex items-center gap-4">
+          <div className="w-1 h-10 rounded-full bg-primary" />
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-glow-cyan">
+            Search Results
+          </h2>
+        </div>
+        
         <div className="sm:block hidden">
-          <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel collapsible>
+          <ResizablePanelGroup direction="horizontal" className="gap-8">
+            <ResizablePanel defaultSize={70}>
               <div className="flex flex-col gap-8">
-                <h4 className="text-xl leading-7 font-semibold text-foreground">
-                  {resultNumber.toLocaleString("en")} results for "{value}"{" "}
+                <h4 className="text-xl font-semibold text-foreground">
+                  <span className="text-primary">{resultNumber.toLocaleString("en")}</span>
+                  {" "}results for "{value}"{" "}
                   {genreId &&
                     movieGenresList.genres
                       .filter((genre) => genre.id === Number(genreId))
-                      .map((el) => <span key={el.id}>in {el.name}</span>)}
+                      .map((el) => (
+                        <span key={el.id} className="text-muted-foreground">
+                          in {el.name}
+                        </span>
+                      ))}
                 </h4>
                 {resultNumber > 0 && totalPages !== 0 ? (
-                  <div className="flex flex-wrap gap-y-8 gap-x-12">
-                    {filteredMovies.slice(0, 18).map((movSearched) => (
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {filteredMovies.slice(0, 16).map((movSearched) => (
                       <Link
                         key={movSearched.id}
                         href={`/details/${movSearched.id}`}
@@ -87,9 +101,11 @@ export const SearchPageComp = async ({ searchParams }: SearchPageCompProps) => {
                 <PaginationComp url={url} page={page} totalPages={totalPages} />
               </div>
             </ResizablePanel>
-            <ResizableHandle withHandle className="mx-11" />
-            <ResizablePanel>
-              <SearchListCard searchValue={value} genreId={genreId} />
+            <ResizableHandle withHandle className="bg-border/30" />
+            <ResizablePanel defaultSize={30} minSize={20}>
+              <div className="glass rounded-2xl p-6">
+                <SearchListCard searchValue={value} genreId={genreId} />
+              </div>
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>

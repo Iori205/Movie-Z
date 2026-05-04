@@ -9,24 +9,22 @@ export const HeroTrailerDialog = ({
   trailerKey: string | undefined;
 }) => {
   return (
-    <div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <div>
-            <div className="sm:block hidden items-center absolute bottom-6 left-6">
-              <Button variant="secondary">
-                <LuPlay size={16} /> Watch Trailer
-              </Button>
-            </div>
-            <div className="sm:hidden block">
-              <Button>
-                <LuPlay size={16} /> Watch Trailer
-              </Button>
-            </div>
-          </div>
-        </DialogTrigger>
-        <TrailerContentComp trailerKey={trailerKey} />
-      </Dialog>
-    </div>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button 
+          size="lg"
+          className="group relative overflow-hidden rounded-full px-8 py-6 bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all duration-300 glow-cyan"
+        >
+          <span className="relative z-10 flex items-center gap-2">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary-foreground/20 group-hover:bg-primary-foreground/30 transition-colors">
+              <LuPlay size={16} className="ml-0.5" />
+            </span>
+            Watch Trailer
+          </span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+        </Button>
+      </DialogTrigger>
+      <TrailerContentComp trailerKey={trailerKey} />
+    </Dialog>
   );
 };

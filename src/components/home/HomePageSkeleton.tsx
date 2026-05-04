@@ -1,53 +1,71 @@
 import React from "react";
 import { Skeleton } from "@/components/ui";
-import { TbLoaderQuarter } from "react-icons/tb";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Film } from "lucide-react";
 
 export const HomePageSkeleton = () => {
   return (
-    <div className="sm:w-[1440px] w-full m-auto sm:mt-6 mt-0 sm:mb-[51px] mb-8">
-      <Skeleton className="sm:w-[1440px] w-full sm:h-[600px] aspect-[125/82] rounded-none flex justify-center items-center">
-        <TbLoaderQuarter size={200} className="animate-spin sm:block hidden" />
-        <AiOutlineLoading3Quarters
-          size={100}
-          className="animate-spin sm:hidden block"
-        />
-      </Skeleton>
-      <div className="sm:hidden block p-5">
-        <div className="w-full flex justify-between mb-4">
-          <div className="w-[101px] flex flex-col gap-1">
-            <Skeleton className="h-[18px] rounded-full" />
-            <Skeleton className="h-[30px] rounded-full" />
+    <div className="w-screen flex flex-col items-center">
+      {/* Hero skeleton */}
+      <div className="w-full sm:h-[85vh] h-[70vh] relative">
+        <Skeleton className="w-full h-full rounded-none">
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <div className="relative">
+              <Film size={80} className="text-primary/30 animate-pulse" />
+              <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full animate-pulse" />
+            </div>
+            <p className="mt-6 text-muted-foreground text-sm animate-pulse">Loading cinematic experience...</p>
           </div>
-          <Skeleton className="w-[101px] h-[30px] rounded-full"></Skeleton>
-        </div>
-        <div className="w-full flex flex-col gap-1">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="w-full h-5 rounded-full" />
-          ))}
-          <Skeleton className="w-[249px] h-5 rounded-full" />
-        </div>
-        <Skeleton className="mt-6 w-[169px] h-10 rounded-full"></Skeleton>
+        </Skeleton>
       </div>
-      {Array.from({ length: 3 }).map((_, index) => (
-        <div
-          key={index}
-          className="sm:w-[1440px] w-full sm:mt-13 mt-8 sm:px-20 px-5 flex sm:gap-8 gap-5 flex-wrap"
-        >
-          <div className="w-full flex justify-between">
-            <Skeleton className="sm:w-[250px] w-[145px] h-8 rounded-full" />
-            <Skeleton className="sm:w-[165px] w-[125px] h-9 rounded-full" />
+      
+      {/* Mobile hero info skeleton */}
+      <div className="sm:hidden block w-full px-5 -mt-16 relative z-10">
+        <div className="glass-strong rounded-2xl p-5 space-y-4">
+          <div className="flex justify-between items-start">
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-4 w-20 rounded-full" />
+              <Skeleton className="h-6 w-40 rounded-full" />
+            </div>
+            <Skeleton className="h-8 w-16 rounded-full" />
           </div>
-          <div className="w-full flex flex-wrap gap-8">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <Skeleton
-                key={i}
-                className="sm:w-[230px] w-[157.5px] sm:h-[439px] h-[309.1px] rounded-lg"
-              />
-            ))}
-          </div>
+          <Skeleton className="h-4 w-full rounded-full" />
+          <Skeleton className="h-4 w-3/4 rounded-full" />
+          <Skeleton className="h-12 w-40 rounded-full mt-4" />
         </div>
-      ))}
+      </div>
+
+      {/* Movie sections skeleton */}
+      <div className="w-full relative">
+        {Array.from({ length: 3 }).map((_, sectionIndex) => (
+          <section
+            key={sectionIndex}
+            className="sm:max-w-[1440px] w-full sm:mt-20 mt-12 sm:px-20 px-5 mx-auto flex flex-col gap-8"
+          >
+            {/* Section header */}
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <Skeleton className="w-1 h-8 rounded-full" />
+                <Skeleton className="h-10 w-40 rounded-full" />
+              </div>
+              <Skeleton className="h-10 w-24 rounded-full" />
+            </div>
+            
+            {/* Movie grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+              {Array.from({ length: 10 }).map((_, cardIndex) => (
+                <div key={cardIndex} className="glass rounded-2xl overflow-hidden">
+                  <Skeleton className="w-full aspect-[2/3]" />
+                  <div className="p-4 space-y-2">
+                    <Skeleton className="h-4 w-16 rounded-full" />
+                    <Skeleton className="h-5 w-full rounded-full" />
+                    <Skeleton className="h-5 w-3/4 rounded-full" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   );
 };

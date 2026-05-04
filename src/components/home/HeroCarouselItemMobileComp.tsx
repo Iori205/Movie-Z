@@ -8,33 +8,36 @@ type HeroCarouselItemMobileCompProps = {
   movie: MovieType;
   trailerKey: string;
 };
+
 export const HeroCarouselItemMobileComp = ({
   movie,
   trailerKey,
 }: HeroCarouselItemMobileCompProps) => {
   return (
-    <div className="sm:hidden block p-5">
-      <div className="flex justify-between">
-        <div>
-          <div className="text-sm leading-5 text-foreground">Now Playing:</div>
-          <div className="text-2xl leading-8 font-semibold text-foreground line-clamp-2">
+    <div className="sm:hidden block p-5 glass-strong rounded-2xl mx-5 -mt-16 relative z-10">
+      <div className="flex justify-between items-start gap-4">
+        <div className="flex-1">
+          <span className="inline-flex items-center gap-2 text-xs font-medium text-primary mb-2">
+            <span className="w-4 h-px bg-primary" />
+            Now Playing
+          </span>
+          <h2 className="text-xl font-bold text-foreground line-clamp-2 leading-tight">
             {movie.title}
-          </div>
+          </h2>
         </div>
-        <div className="flex gap-1 mt-2.5 mb-3.5">
-          <GoStarFill size={28} color="#FDE047" />
-          <p className="text-lg leading-7 font-semibold text-foreground">
+        <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full glass shrink-0">
+          <GoStarFill size={16} className="text-yellow-400" />
+          <span className="text-sm font-semibold text-foreground">
             {movie.vote_average.toFixed(1)}
-            <span className="text-base leading-6 font-normal text-muted-foreground">
-              /10
-            </span>
-          </p>
+          </span>
         </div>
       </div>
-      <p className="text-sm leading-5 text-foreground mt-4 line-clamp-2">
+      
+      <p className="text-sm text-muted-foreground mt-4 line-clamp-2 leading-relaxed">
         {movie.overview}
       </p>
-      <div className="mt-4">
+      
+      <div className="mt-5">
         <HeroTrailerDialog trailerKey={trailerKey} />
       </div>
     </div>
