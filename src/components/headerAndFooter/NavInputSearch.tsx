@@ -81,14 +81,17 @@ export const NavInputSearch = () => {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger>
-        <div className="flex items-center">
-          <IoSearchOutline size={16} className="-mr-7" color="#71717A" />
+        <div className="relative flex items-center group">
+          <IoSearchOutline 
+            size={18} 
+            className="absolute left-4 z-10 text-muted-foreground group-focus-within:text-primary transition-colors duration-300" 
+          />
           <Input
             value={searchValue}
             onChange={handleInputChange}
             type="text"
-            placeholder="Search.."
-            className="sm:w-[379px] w-full px-3 sm:py-2 py-3 pl-[38px] sm:border border-border-foreground border-0 rounded-lg text-foreground text-sm leading-5 flex items-center sm:shadow shadow-none"
+            placeholder="Search films..."
+            className="sm:w-[320px] w-full pl-11 pr-4 py-2.5 glass rounded-full border-0 text-foreground text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 transition-all duration-300"
             onKeyDown={handleKeyDown}
           />
         </div>
@@ -99,7 +102,7 @@ export const NavInputSearch = () => {
         side="bottom"
         align="center"
         alignOffset={-100}
-        className="sm:w-[577px] w-[80vw] sm:mt-[4.5px] mt-[11.5px] p-3 rounded-lg mx-5"
+        className="sm:w-[480px] w-[80vw] sm:mt-2 mt-3 p-4 rounded-2xl glass-strong border-border/50 shadow-2xl"
       >
         <div>
           {isLoading ? (
@@ -110,11 +113,11 @@ export const NavInputSearch = () => {
                 {foundMovies?.results.slice(0, 5).map((movSearched, i) => (
                   <div key={movSearched.id}>
                     <div
-                      className={
+                      className={`rounded-xl transition-all duration-200 ${
                         i === index
-                          ? "bg-muted-foreground rounded-xl py-0.5 px-0.5"
-                          : ""
-                      }
+                          ? "bg-primary/20 ring-1 ring-primary/40"
+                          : "hover:bg-muted/50"
+                      }`}
                       onMouseEnter={() => setIndex(i)}
                       onClick={() => {
                         setIsOpen(false);
@@ -131,18 +134,23 @@ export const NavInputSearch = () => {
                         href={`/details/${movSearched.id}`}
                       />
                     </div>
-                    <Separator className="my-2" />
+                    <Separator className="my-2 bg-border/30" />
                   </div>
                 ))}
-                <Button asChild variant="link" onClick={handleSeeAllResults}>
+                <Button 
+                  asChild 
+                  variant="link" 
+                  onClick={handleSeeAllResults}
+                  className="text-primary hover:text-primary/80"
+                >
                   <Link href={`/search?value=${searchValue}`}>
                     See all results for "{searchValue}"
                   </Link>
                 </Button>
               </>
             ) : (
-              <div className="flex justify-center mt-[32.5px] mb-[24.5px]">
-                <Button asChild variant="link" onClick={handleSeeAllResults}>
+              <div className="flex justify-center py-8">
+                <Button asChild variant="link" onClick={handleSeeAllResults} className="text-muted-foreground">
                   <Link href={`/search?value=${searchValue}`}>
                     No results found.
                   </Link>

@@ -16,23 +16,23 @@ type MedMovieCardProps = {
 
 export const MedMovieCard = ({ title, score, image }: MedMovieCardProps) => {
   return (
-    <Card className="w-[165px] p-0 overflow-hidden bg-secondary gap-0 rounded-md">
-      <CardContent className="p-0">
-        <div className="w-full h-61 relative">
+    <Card className="group w-full p-0 overflow-hidden bg-card/50 glass border-border/30 rounded-xl hover-lift cursor-pointer">
+      <CardContent className="p-0 relative overflow-hidden">
+        <div className="w-full aspect-[2/3] relative">
           <ImgComp image={image} />
         </div>
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </CardContent>
-      <CardFooter className="flex-col items-start px-2 py-1">
-        <CardDescription className="flex gap-1 items-center mb-[3px]">
-          <GoStarFill size={16} color="#FDE047" />
-          <p className="text-foreground text-sm leading-5 font-medium">
+      <CardFooter className="flex-col items-start p-3 gap-2 bg-gradient-to-t from-card/80 to-transparent">
+        <CardDescription className="flex gap-1.5 items-center">
+          <GoStarFill size={14} className="text-yellow-400" />
+          <span className="text-foreground text-sm font-medium">
             {score.toFixed(1)}
-            <span className="text-muted-foreground text-xs leading-4 font-normal">
-              /10
-            </span>
-          </p>
+            <span className="text-muted-foreground text-xs font-normal ml-0.5">/10</span>
+          </span>
         </CardDescription>
-        <CardTitle className="text-base leading-7 text-foreground font-normal min-h-14 line-clamp-2">
+        <CardTitle className="text-sm leading-snug text-foreground font-medium min-h-10 line-clamp-2 group-hover:text-primary transition-colors duration-300">
           {title}
         </CardTitle>
       </CardFooter>

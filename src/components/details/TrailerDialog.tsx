@@ -11,15 +11,18 @@ export const TrailerDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex gap-3 items-center absolute bottom-6 left-6">
-          <Button
-            variant="outline"
-            className="w-10 h-10 rounded-full border-0 bg-white"
-          >
-            <LuPlay size={16} />
-          </Button>
-          <span className="text-base leading-6 text-white">Play Trailer</span>
-        </div>
+        <button className="group flex gap-3 items-center absolute bottom-6 left-6 cursor-pointer">
+          <div className="relative">
+            <div className="w-14 h-14 rounded-full glass flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+              <LuPlay size={20} className="text-foreground ml-1" />
+            </div>
+            {/* Pulse effect */}
+            <div className="absolute inset-0 rounded-full border border-foreground/30 animate-ping opacity-30" />
+          </div>
+          <span className="text-base font-medium text-foreground text-glow-cyan">
+            Play Trailer
+          </span>
+        </button>
       </DialogTrigger>
       <TrailerContentComp trailerKey={trailerKey} />
     </Dialog>

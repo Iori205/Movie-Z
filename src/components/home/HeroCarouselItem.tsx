@@ -23,18 +23,36 @@ export const HeroCarouselItem = ({ movie }: { movie: MovieType }) => {
   }, []);
 
   return (
-    <CarouselItem key={movie.id} className="basis-none">
-      <HeroCard
-        image={movie.backdrop_path}
-        label="Now Playing:"
-        title={movie.title}
-        score={movie.vote_average}
-        description={movie.overview}
-        trailerKey={trailerKey}
-        href={`/details/${movie.id}`}
-      />
-
-      <HeroCarouselItemMobileComp movie={movie} trailerKey={trailerKey} />
+    <CarouselItem key={movie.id} className="basis-full pl-0">
+      {/* Desktop view */}
+      <div className="sm:block hidden">
+        <HeroCard
+          image={movie.backdrop_path}
+          label="Now Playing"
+          title={movie.title}
+          score={movie.vote_average}
+          description={movie.overview}
+          trailerKey={trailerKey}
+          href={`/details/${movie.id}`}
+        />
+      </div>
+      
+      {/* Mobile view */}
+      <div className="sm:hidden block">
+        <div className="relative h-[50vh]">
+          <div className="absolute inset-0">
+            {movie.backdrop_path && (
+              <img
+                src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+                alt={movie.title}
+                className="w-full h-full object-cover"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          </div>
+        </div>
+        <HeroCarouselItemMobileComp movie={movie} trailerKey={trailerKey} />
+      </div>
     </CarouselItem>
   );
 };

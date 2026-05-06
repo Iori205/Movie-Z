@@ -8,43 +8,46 @@ type DetailsHeaderProps = {
 };
 export const DetailsHeader = ({ movieDetails }: DetailsHeaderProps) => {
   return (
-    <div className="sm:mx-0 mx-5 flex justify-between sm:mb-6 mb-4">
-      <div className="flex flex-col gap-1">
-        <h1 className="sm:text-4xl text-2xl sm:leading-10 leading-8 sm:font-bold font-semibold text-foreground sm:text-nowrap text-wrap">
+    <div className="sm:mx-0 mx-5 flex justify-between sm:mb-8 mb-6">
+      <div className="flex flex-col gap-2">
+        <h1 className="sm:text-5xl text-2xl sm:leading-tight leading-8 font-bold text-foreground text-balance text-glow-cyan">
           {movieDetails.title}
         </h1>
-        <p className="flex sm:text-lg text-sm sm:leading-7 leading-5 text-foreground">
-          {movieDetails.release_date}
-          <Dot className="sm:w-7 w-5 sm:h-7 h-5 stroke-white-[1px]" />
-          {movieDetails.adult ? "R" : "G"}
-          <Dot className="sm:w-7 w-5 sm:h-7 h-5" />
-          {movieDetails.runtime >= 60
-            ? `${Math.floor(movieDetails.runtime / 60)}h ${
-                movieDetails.runtime % 60 > 0
-                  ? `${movieDetails.runtime % 60}m`
-                  : ""
-              }`
-            : `${movieDetails.runtime}m`}
-        </p>
+        <div className="flex items-center text-muted-foreground sm:text-base text-sm">
+          <span>{movieDetails.release_date}</span>
+          <Dot className="w-5 h-5" />
+          <span className="px-2 py-0.5 rounded glass text-xs font-medium">
+            {movieDetails.adult ? "R" : "G"}
+          </span>
+          <Dot className="w-5 h-5" />
+          <span>
+            {movieDetails.runtime >= 60
+              ? `${Math.floor(movieDetails.runtime / 60)}h ${
+                  movieDetails.runtime % 60 > 0
+                    ? `${movieDetails.runtime % 60}m`
+                    : ""
+                }`
+              : `${movieDetails.runtime}m`}
+          </span>
+        </div>
       </div>
-      <div className="sm:py-1 pt-1 pr-3 sm:ml-0 ml-5">
-        <p className="text-xs leading-4 font-medium text-foreground sm:opacity-100 opacity-0">
+      
+      <div className="flex flex-col items-end gap-1">
+        <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
           Rating
-        </p>
-        <div className="flex items-center gap-1">
-          <GoStarFill className="sm:w-7 w-6 sm:h-7 h-6" color="#FDE047" />
-          <div className="flex flex-col sm:py-0.5 py-0">
-            <p className="sm:text-lg text-sm sm:leading-7 leading-5 sm:font-semibold font-bold text-foreground">
+        </span>
+        <div className="flex items-center gap-2 px-4 py-2 rounded-xl glass">
+          <GoStarFill className="w-6 h-6 text-yellow-400" />
+          <div className="flex flex-col">
+            <span className="text-lg font-bold text-foreground leading-tight">
               {movieDetails.vote_average.toFixed(1)}
-              <span className="sm:text-base text-sm sm:leading-6 leading-5 font-normal text-muted-foreground">
-                /10
-              </span>
-            </p>
-            <div className="text-xs leading-4 text-muted-foreground">
+              <span className="text-sm font-normal text-muted-foreground">/10</span>
+            </span>
+            <span className="text-xs text-muted-foreground">
               {movieDetails.vote_count >= 1000
-                ? `${Math.floor(movieDetails.vote_count / 1000)}k`
-                : movieDetails.vote_count}
-            </div>
+                ? `${Math.floor(movieDetails.vote_count / 1000)}k votes`
+                : `${movieDetails.vote_count} votes`}
+            </span>
           </div>
         </div>
       </div>

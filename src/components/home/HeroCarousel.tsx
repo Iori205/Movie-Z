@@ -20,7 +20,7 @@ export const HeroCarousel = ({ movies }: HeroCarouselProps) => {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
+    Autoplay({ delay: 4000, stopOnInteraction: true })
   );
   React.useEffect(() => {
     if (!api) {
@@ -32,38 +32,49 @@ export const HeroCarousel = ({ movies }: HeroCarouselProps) => {
   }, [api]);
 
   return (
-    <Carousel
-      className="sm:w-[1440px] w-full sm:h-150 aspect-[125/82] relative"
-      setApi={setApi}
-      plugins={[plugin.current]}
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
-    >
-      <CarouselContent>
-        {movies.slice(0, 5).map((movie) => (
-          <HeroCarouselItem key={movie.id} movie={movie} />
-        ))}
-      </CarouselContent>
-      <div className="sm:block hidden">
-        <CarouselPrevious className="left-11 size-10" />
-      </div>
-      <div className="sm:block hidden">
-        <CarouselNext className="right-11 size-10" />
-      </div>
+    <div className="relative w-full">
+      <Carousel
+        className="w-full relative"
+        setApi={setApi}
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+      >
+        <CarouselContent>
+          {movies.slice(0, 5).map((movie) => (
+            <HeroCarouselItem key={movie.id} movie={movie} />
+          ))}
+        </CarouselContent>
+        
+        {/* Navigation buttons with glassmorphism */}
+        <div className="sm:block hidden">
+          <CarouselPrevious className="left-8 size-12 glass border-0 text-foreground hover:bg-primary/20 hover:text-primary transition-all duration-300" />
+        </div>
+        <div className="sm:block hidden">
+          <CarouselNext className="right-8 size-12 glass border-0 text-foreground hover:bg-primary/20 hover:text-primary transition-all duration-300" />
+        </div>
 
-      <div className="sm:flex hidden gap-2 absolute bottom-[37px] left-170">
-        {Array.from({ length: count }).map((_, index) => (
-          <div
-            onClick={() => {
-              api?.scrollTo(index);
-            }}
-            key={index}
-            className={`w-2 h-2 rounded-full ${
-              index + 1 === current ? "bg-white" : "bg-white opacity-80"
-            }`}
-          />
-        ))}
-      </div>
-    </Carousel>
+        {/* Progress indicators */}
+        <div className="sm:flex hidden gap-3 absolute bottom-12 left-1/2 -translate-x-1/2">
+          {Array.from({ length: count }).map((_, index) => (
+            <button
+              onClick={() => {
+                api?.scrollTo(index);
+              }}
+              key={index}
+              className={`h-1 rounded-full transition-all duration-500 ${
+                index + 1 === current 
+                  ? "w-8 bg-primary glow-cyan" 
+                  : "w-4 bg-foreground/30 hover:bg-foreground/50"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </Carousel>
+      
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
+    </div>
   );
 };

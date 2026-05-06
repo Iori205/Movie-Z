@@ -39,22 +39,38 @@ export const DetailsDynamicPageComp = async ({
   const image = movieDetails.backdrop_path;
 
   return (
-    <div className="w-screen flex flex-col items-center">
-      <div className="sm:w-[1440px] w-full sm:pl-45 pl-0 sm:pr-[178px] pr-0 sm:mt-13 sm:mb-[112.62px] my-8">
+    <div className="w-screen flex flex-col items-center pt-24">
+      {/* Background hero image with overlay */}
+      <div className="absolute top-0 left-0 right-0 h-[60vh] overflow-hidden pointer-events-none">
+        <div className="absolute inset-0">
+          <ImgComp image={image} />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
+        </div>
+        {/* Ambient glow */}
+        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-primary/20 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-accent/20 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="relative z-10 sm:max-w-[1440px] w-full sm:px-20 px-0 sm:mt-8 mt-4 sm:mb-20 mb-8">
         <DetailsHeader movieDetails={movieDetails} />
-        <div className="w-full sm:flex justify-between block">
-          <div className="sm:block hidden">
+        
+        {/* Media section */}
+        <div className="w-full sm:flex gap-8 block">
+          <div className="sm:block hidden shrink-0">
             <DetailsImgComp movieDetails={movieDetails} />
           </div>
-          <div className="sm:w-190 w-full sm:h-107 aspect-[16/9] sm:rounded-sm rounded-none overflow-hidden relative">
+          <div className="sm:flex-1 w-full sm:aspect-video aspect-[16/9] rounded-2xl overflow-hidden relative glass">
             <ImgComp image={image} />
             <TrailerDialog trailerKey={trailer?.key} />
           </div>
         </div>
+        
         <DetailsDescription
           movieDetails={movieDetails}
           movieCredits={movieCredits}
         />
+        
         <MoreLikeThisMoviesContainer
           similarMovies={similarMovies.results}
           id={id}
